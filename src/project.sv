@@ -17,11 +17,13 @@ module tt_um_example (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-  assign uio_oe[7:3] = '0;
+  assign uio_oe[1:0] = '0;
+  assign uio_oe[7:2] = '1;
+  assign uio_out[7:3] = '0;
 
   // List all unused inputs to prevent warnings
   wire _unused = &{ena, 1'b0};
 
-  RangeFinder #(8) rf(.data_in(ui_in), .range(uo_out), .clock(clk), .reset(~rst_n), .go(uio_oe[0]), .finish(uio_oe[1]), .error(uio_oe[2]));
+  RangeFinder #(8) rf(.data_in(ui_in), .range(uo_out), .clock(clk), .reset(~rst_n), .go(uio_out[0]), .finish(uio_out[1]), .error(uio_out[2]));
 
 endmodule
