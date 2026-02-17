@@ -5,6 +5,7 @@
 
 `default_nettype none
 
+
 module tt_um_example (
     input  wire [7:0] ui_in,    // Dedicated inputs
     output wire [7:0] uo_out,   // Dedicated outputs
@@ -16,12 +17,11 @@ module tt_um_example (
     input  wire       rst_n     // reset_n - low to reset
 );
 
-  // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
-  assign uio_out = 0;
-  assign uio_oe  = 0;
+  assign uio_oe[7:3] = '0;
 
   // List all unused inputs to prevent warnings
-  wire _unused = &{ena, clk, rst_n, 1'b0};
+  wire _unused = &{ena, 1'b0};
+
+  RangeFinder #(8) rf(.data_in(ui_in), .range(uo_out), .clock(clk), .reset(~rst_n), .go(uio_oe[0]), .finish(uio_oe[1]), .error(uio_oe[2]));
 
 endmodule
