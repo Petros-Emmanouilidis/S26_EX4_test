@@ -44,6 +44,7 @@ module RangeFinder
 
    //combinational logic for error
    always_comb begin
+      error = '0;
       if (reset) error = 1'b0;
       if (go & finish)
          error = 1'b1;
@@ -68,6 +69,9 @@ module RangeFinder
 
    //combinational logic for range
    always_comb begin
+      actual_min = '0;
+      actual_max = '0;
+      range = '0;
       if (~error) begin
          if (data_in > max) begin
             actual_max = data_in;
