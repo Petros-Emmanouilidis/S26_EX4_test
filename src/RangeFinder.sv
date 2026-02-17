@@ -10,8 +10,8 @@ module RangeFinder
      output logic             error);
 
       assign range = data_in;
-      always_ff @(posedge clk) begin
-         if (~rst_n) begin
+      always_ff @(posedge clock) begin
+         if (reset) begin
             error <= '0;
          end
          else begin
